@@ -12,19 +12,20 @@ bool match = false;
 namespace Phonetic {
     std::string find(const std::string text, const std::string word) {
         if (text == " " || word == " ") {
-            throw std::runtime_error("did not find the word in the text");
+            throw std::runtime_error("Error! can not recieve empty word");
         }
 
         std::vector<std::string> tokens;
         std::stringstream check1(text);
-        std::string intermediate;
-        while (std::getline(check1, intermediate, ' ')) /* Tokenizing a string */ {
-            tokens.push_back(intermediate);
+        std::string current;
+        
+        while (std::getline(check1, current, ' ')) /* Tokenizing a string */ {
+            tokens.push_back(current);
         }
 
         for (int i = 0; i < tokens.size(); i++) {
             if (tokens[i].length() == word.length()) {
-                check(tokens[i], word);
+                check_word(tokens[i], word);
             }
 
             if (match) {
@@ -36,9 +37,9 @@ namespace Phonetic {
         throw std::runtime_error("did not find the word in the text");
     }
 
-    void check(const std::string token, const std::string word) {
+    void check_word(const std::string token, const std::string word) {
         for (int i = 0; i < token.length(); i++) {
-            if (!confirm(token[i], word[i])) {
+            if (!check_char(token[i], word[i])) {
                 return;
             }
         }
@@ -46,34 +47,34 @@ namespace Phonetic {
         match = true;
     }
 
-    bool confirm(char l1, char l2) {
-        if (l1 == l2 || l1 == l2 + 32 || l1 == l2 - 32) {
+    bool check_char(char first, char second) {
+        if (first == second || first == second + 32 || first == second - 32) {
             return true;
         }
 
-        if (l1 <= 90) { // change to lower case
-            l1 += 32;
+        if (first <= 90) { // change to lower case
+            first += 32;
         }
         
-        if (l2 <= 90) {
-            l2 += 32;
+        if (second <= 90) {
+            second += 32;
         }
 
-        if ((l1 == 'v' || l1 == 'w') && (l2 == 'v' || l2 == 'w')) {
+        if ((first == 'v' || first == 'w') && (second == 'v' || second == 'w')) {
             return true;
-        } else if ((l1 == 'g' || l1 == 'j') && (l2 == 'g' || l2 == 'j')) {
+        } else if ((first == 'g' || first == 'j') && (second == 'g' || second == 'j')) {
             return true;
-        } else if ((l1 == 's' || l1 == 'z') && (l2 == 's' || l2 == 'z')) {
+        } else if ((first == 's' || first == 'z') && (second == 's' || second == 'z')) {
             return true;
-        } else if ((l1 == 'd' || l1 == 't') && (l2 == 'd' || l2 == 't')) {
+        } else if ((first == 'd' || first == 't') && (second == 'd' || second == 't')) {
             return true;
-        } else if ((l1 == 'o' || l1 == 'u') && (l2 == 'o' || l2 == 'u')) {
+        } else if ((first == 'o' || first == 'u') && (second == 'o' || second == 'u')) {
             return true;
-        } else if ((l1 == 'i' || l1 == 'y') && (l2 == 'i' || l2 == 'y')) {
+        } else if ((first == 'i' || first == 'y') && (second == 'i' || second == 'y')) {
             return true;
-        } else if ((l1 == 'b' || l1 == 'f' || l1 == 'p') && (l2 == 'b' || l2 == 'f' || l2 == 'p')) {
+        } else if ((first == 'b' || first == 'f' || first == 'p') && (second == 'b' || second == 'f' || second == 'p')) {
             return true;
-        } else if ((l1 == 'c' || l1 == 'k' || l1 == 'q') && (l2 == 'c' || l2 == 'k' || l2 == 'q')) {
+        } else if ((first == 'c' || first == 'k' || first == 'q') && (second == 'c' || second == 'k' || second == 'q')) {
             return true;
         }
 
