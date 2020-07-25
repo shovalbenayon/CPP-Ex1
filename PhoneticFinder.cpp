@@ -1,7 +1,4 @@
-/**
- * 03-2020
- * @author Shoval Benayon
- */
+
 
 #include <stdexcept>
 #include <bits/stdc++.h>

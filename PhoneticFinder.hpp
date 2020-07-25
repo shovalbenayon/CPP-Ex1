@@ -1,7 +1,4 @@
-/**
- * 03-2020
- * @author Shoval benayon
- */
+
 
 #pragma once
 
